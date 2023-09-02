@@ -15,11 +15,14 @@ h1 {
   color: #333;
 }
 
+
 #mazeContainer {
-  display: grid;
-  grid-gap: 1px;
+  /* display: grid; */
+  /* display: inline-block; */
+  display: flex ;
+  justify-content: center; /* Center the content horizontally */
+  align-items: center;
   margin-top: 20px;
-  background-color: #333;
   border: 1px solid #444;
   padding: 10px;
   border-radius: 5px;
@@ -31,27 +34,4 @@ h1 {
   height: 20px;
   background-color: #fff;
   border: 1px solid #444;
-}
-
-
-#mazeSize {
-  width: 50px;
-  padding: 5px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-#generateButton {
-  padding: 5px 10px;
-  font-size: 16px;
-  background-color: #0074d9;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-#generateButton:hover {
-  background-color: #0056b3;
 }
