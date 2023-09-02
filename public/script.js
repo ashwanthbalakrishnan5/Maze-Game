@@ -28,7 +28,8 @@ function generateMaze(width, height, start, end) {
         ny >= 0 &&
         ny < height * 2 + 1 &&
         maze[ny][nx]
-      ) {
+      )
+      {
         maze[y + dy][x + dx] = false;
         stack.push({ x: nx, y: ny });
         found = true;
@@ -82,7 +83,7 @@ for (let y = 0; y < maze.length; y++) {
     const cell = document.createElement("div");
     cell.className = "cell";
     cell.style.backgroundColor = maze[y][x] ? "black" : "white";
-    if (x === 0 && y === 1) {
+    if (x === 1 && y === 1) {
       cell.style.backgroundColor = "green";
     }
     else if (x === mazeWidth * 2 && y === mazeHeight * 2 - 1) {
@@ -94,7 +95,7 @@ for (let y = 0; y < maze.length; y++) {
 
 document.body.appendChild(mazeContainer);
 
-let playerPosition = [0, 1]
+let playerPosition = [1, 1]
 
 function isValidMove(x, y) {
   if (x < 0 || x >= mazeWidth * 2 + 1 || y < 0 || y >= mazeHeight * 2 + 1) {
