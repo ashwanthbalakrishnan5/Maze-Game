@@ -3,42 +3,41 @@ function generateMaze(width, height, start, end) {
     .fill(null)
     .map(() => new Array(width * 2 + 1).fill(true));
 
-  const stack = [{ x: start[0] * 2 + 1, y: start[1] * 2 + 1 }];
-
-  while (stack.length > 0) {
-    const { x, y } = stack[stack.length - 1];
-    maze[y][x] = false;
-
+  const walls = [];
+  const addWalls = (x, y) => {
     const directions = [
-      { dx: 1, dy: 0 },
-      { dx: -1, dy: 0 },
-      { dx: 0, dy: 1 },
-      { dx: 0, dy: -1 },
+      { dx: 2, dy: 0 },
+      { dx: -2, dy: 0 },
+      { dx: 0, dy: 2 },
+      { dx: 0, dy: -2 },
     ];
-    shuffleArray(directions);
-
-    let found = false;
-    for (const { dx, dy } of directions) {
-      const nx = x + dx * 2;
-      const ny = y + dy * 2;
-
+    directions.forEach(({ dx, dy }) => {
+      const nx = x + dx;
+      const ny = y + dy;
       if (
-        nx >= 0 &&
-        nx < width * 2 + 1 &&
-        ny >= 0 &&
-        ny < height * 2 + 1 &&
+        nx > 0 &&
+        nx < width * 2 &&
+        ny > 0 &&
+        ny < height * 2 &&
         maze[ny][nx]
-      )
-      {
-        maze[y + dy][x + dx] = false;
-        stack.push({ x: nx, y: ny });
-        found = true;
-        break;
+      ) {
+        walls.push({ x: nx, y: ny, px: x, py: y });
       }
-    }
+    });
+  };
 
-    if (!found) {
-      stack.pop();
+  maze[start[1] * 2 + 1][start[0] * 2 + 1] = false;
+  addWalls(start[0] * 2 + 1, start[1] * 2 + 1);
+
+  while (walls.length > 0) {
+    const wallIndex = Math.floor(Math.random() * walls.length);
+    const { x, y, px, py } = walls[wallIndex];
+    walls.splice(wallIndex, 1);
+
+    if (maze[y][x]) {
+      maze[y][x] = false;
+      maze[(y + py) / 2][(x + px) / 2] = false;
+      addWalls(x, y);
     }
   }
 
@@ -47,6 +46,7 @@ function generateMaze(width, height, start, end) {
 
   return maze;
 }
+
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
